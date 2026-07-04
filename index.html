@@ -1,0 +1,384 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RHINO GYM | Fitness - A Perfect Way of Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons for UI elements -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#FF6B00',
+                            dark: '#0a0a0a',
+                            gray: '#1a1a1a',
+                            light: '#f4f4f5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Oswald', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: #fff; }
+        h1, h2, h3, .font-display { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #FF6B00; border-radius: 5px; }
+        
+        /* Hero Image Overlay */
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(10, 10, 10, 0.9) 0%, rgba(10, 10, 10, 0.6) 100%), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .clip-path-slant {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        /* Interactive Card Hover */
+        .service-card { transition: all 0.3s ease; }
+        .service-card:hover { transform: translateY(-10px); border-color: #FF6B00; box-shadow: 0 10px 30px -10px rgba(255, 107, 0, 0.3); }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-orange selection:text-white flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 bg-brand-dark/90 backdrop-blur-md border-b border-brand-orange/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 text-brand-orange flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <polygon points="50,5 90,27 90,72 50,95 10,72 10,27" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+                            <path d="M75,35 C75,35 65,25 55,30 C45,35 45,45 40,40 C35,35 25,45 25,45 C25,45 20,55 25,65 C30,75 40,75 40,75 L45,65 C45,65 55,75 75,70 C75,70 80,60 80,45 C80,30 75,35 75,35 Z" fill="currentColor"/>
+                            <path d="M25,45 L15,50 L20,60 L25,65" fill="currentColor"/>
+                            <circle cx="38" cy="50" r="3" fill="#0a0a0a"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display text-2xl font-bold tracking-wider leading-none text-brand-orange">RHINO</span>
+                        <span class="font-display text-xl font-bold tracking-wider leading-none text-white">GYM</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-300 hover:text-brand-orange transition-colors font-medium text-sm uppercase tracking-wider">Home</a>
+                    <a href="#about" class="text-gray-300 hover:text-brand-orange transition-colors font-medium text-sm uppercase tracking-wider">About</a>
+                    <a href="#classes" class="text-gray-300 hover:text-brand-orange transition-colors font-medium text-sm uppercase tracking-wider">Classes</a>
+                    <a href="#contact" class="text-gray-300 hover:text-brand-orange transition-colors font-medium text-sm uppercase tracking-wider">Contact</a>
+                    <a href="#contact" class="bg-brand-orange text-white px-6 py-2 rounded-full font-bold uppercase tracking-wider hover:bg-orange-600 transition-all transform hover:scale-105 flex items-center gap-2">
+                        Join Now <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-white hover:text-brand-orange focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-gray border-t border-gray-800 absolute w-full top-full left-0">
+            <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+                <a href="#home" class="block px-3 py-3 text-base font-medium text-white hover:text-brand-orange border-b border-gray-800">Home</a>
+                <a href="#about" class="block px-3 py-3 text-base font-medium text-white hover:text-brand-orange border-b border-gray-800">About</a>
+                <a href="#classes" class="block px-3 py-3 text-base font-medium text-white hover:text-brand-orange border-b border-gray-800">Classes</a>
+                <a href="#contact" class="block px-3 py-3 text-base font-medium text-white hover:text-brand-orange border-b border-gray-800">Contact</a>
+                <a href="#contact" class="mt-4 w-full text-center bg-brand-orange text-white px-6 py-3 rounded-full font-bold uppercase tracking-wider">Join Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 hero-bg clip-path-slant min-h-[90vh] flex items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-orange/20 border border-brand-orange/50 text-brand-orange mb-6">
+                    <i data-lucide="map-pin" class="w-4 h-4"></i>
+                    <span class="text-sm font-semibold tracking-wide uppercase">Vadlapudi Center, Mangalagiri</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 leading-tight">
+                    BUILD YOUR <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-orange-400">PERFECT BODY</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl font-light border-l-4 border-brand-orange pl-4">
+                    Fitness - A Perfect Way of life. Join Rhino Gym today and transform your physique with expert trainers and top-tier equipment.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#classes" class="bg-brand-orange text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-orange-600 transition-all text-center flex justify-center items-center gap-2 group">
+                        Explore Classes <i data-lucide="dumbbell" class="w-5 h-5 group-hover:animate-bounce"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="bg-transparent border border-white text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-white hover:text-brand-dark transition-all text-center flex justify-center items-center gap-2">
+                        Follow on IG <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-brand-dark -mt-10 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 bg-brand-gray p-8 rounded-2xl border border-gray-800 shadow-2xl">
+                <div class="text-center">
+                    <h3 class="text-4xl text-brand-orange mb-1">500+</h3>
+                    <p class="text-gray-400 text-sm uppercase tracking-wide">Happy Members</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-4xl text-brand-orange mb-1">Modern</h3>
+                    <p class="text-gray-400 text-sm uppercase tracking-wide">Equipment</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-4xl text-brand-orange mb-1">Expert</h3>
+                    <p class="text-gray-400 text-sm uppercase tracking-wide">Trainers</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-4xl text-brand-orange mb-1">24/7</h3>
+                    <p class="text-gray-400 text-sm uppercase tracking-wide">Access Available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop" alt="Gym Interior" class="rounded-2xl shadow-2xl border border-gray-800 relative z-10">
+                    <div class="absolute -bottom-6 -right-6 w-full h-full bg-brand-orange rounded-2xl z-0 opacity-20"></div>
+                </div>
+                <div>
+                    <h2 class="text-brand-orange text-lg tracking-widest mb-2 flex items-center gap-2">
+                        <span class="w-12 h-[2px] bg-brand-orange inline-block"></span> ABOUT US
+                    </h2>
+                    <h3 class="text-4xl md:text-5xl mb-6">WE ARE <span class="text-brand-orange">RHINO GYM</span></h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Located near the Rajeev Statue in Vadlapudi center, Rhino Gym is more than just a place to lift weights. We are a community dedicated to physical fitness and healthy living. 
+                    </p>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        Our motto is simple: <strong>Fitness - A Perfect Way of life.</strong> Whether you are a beginner taking your first steps or an experienced athlete pushing your limits, we provide the environment, the equipment, and the expertise you need to succeed.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-gray-200">
+                            <i data-lucide="check-circle-2" class="text-brand-orange w-6 h-6"></i>
+                            State-of-the-art strength & cardio equipment
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-200">
+                            <i data-lucide="check-circle-2" class="text-brand-orange w-6 h-6"></i>
+                            Certified personal trainers
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-200">
+                            <i data-lucide="check-circle-2" class="text-brand-orange w-6 h-6"></i>
+                            Motivating and hygienic environment
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Classes Section -->
+    <section id="classes" class="py-24 bg-brand-gray relative overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-brand-orange opacity-5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-orange opacity-5 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-brand-orange text-lg tracking-widest mb-2 justify-center flex items-center gap-2">
+                    <span class="w-8 h-[2px] bg-brand-orange inline-block"></span> OUR PROGRAMS <span class="w-8 h-[2px] bg-brand-orange inline-block"></span>
+                </h2>
+                <h3 class="text-4xl md:text-5xl">CHOOSE YOUR <span class="text-brand-orange">BATTLE</span></h3>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="service-card bg-brand-dark p-8 rounded-2xl border border-gray-800 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 text-brand-orange opacity-10 group-hover:scale-150 transition-transform duration-500">
+                        <i data-lucide="dumbbell" class="w-32 h-32 -mt-8 -mr-8"></i>
+                    </div>
+                    <div class="w-14 h-14 bg-brand-orange/20 text-brand-orange rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="dumbbell" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 font-display">STRENGTH TRAINING</h4>
+                    <p class="text-gray-400 mb-6">Build muscle and increase your power with our extensive free weights and resistance machines area.</p>
+                    <a href="#" class="inline-flex items-center text-brand-orange font-semibold uppercase text-sm tracking-wider hover:text-white transition-colors">
+                        Learn More <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card bg-brand-dark p-8 rounded-2xl border border-gray-800 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 text-brand-orange opacity-10 group-hover:scale-150 transition-transform duration-500">
+                        <i data-lucide="activity" class="w-32 h-32 -mt-8 -mr-8"></i>
+                    </div>
+                    <div class="w-14 h-14 bg-brand-orange/20 text-brand-orange rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="activity" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 font-display">CARDIO FITNESS</h4>
+                    <p class="text-gray-400 mb-6">Burn calories and improve endurance with our top-tier treadmills, ellipticals, and cycling bikes.</p>
+                    <a href="#" class="inline-flex items-center text-brand-orange font-semibold uppercase text-sm tracking-wider hover:text-white transition-colors">
+                        Learn More <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card bg-brand-dark p-8 rounded-2xl border border-gray-800 relative group overflow-hidden">
+                    <div class="absolute top-0 right-0 text-brand-orange opacity-10 group-hover:scale-150 transition-transform duration-500">
+                        <i data-lucide="users" class="w-32 h-32 -mt-8 -mr-8"></i>
+                    </div>
+                    <div class="w-14 h-14 bg-brand-orange/20 text-brand-orange rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="users" class="w-7 h-7"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-3 font-display">PERSONAL TRAINING</h4>
+                    <p class="text-gray-400 mb-6">Get 1-on-1 guidance from our expert trainers to reach your specific fitness goals faster.</p>
+                    <a href="#" class="inline-flex items-center text-brand-orange font-semibold uppercase text-sm tracking-wider hover:text-white transition-colors">
+                        Learn More <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="py-20 bg-brand-orange relative text-brand-dark text-center">
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6 text-black">READY TO START YOUR JOURNEY?</h2>
+            <p class="text-xl mb-8 font-medium">Join Rhino Gym today and get your first session with a personal trainer for free.</p>
+            <a href="#contact" class="inline-block bg-black text-white px-10 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-gray-800 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                Become a Member
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-brand-dark pt-20 pb-10 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <!-- Brand Col -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 text-brand-orange">
+                            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                                <polygon points="50,5 90,27 90,72 50,95 10,72 10,27" fill="none" stroke="currentColor" stroke-width="6" stroke-linejoin="round"/>
+                                <path d="M75,35 C75,35 65,25 55,30 C45,35 45,45 40,40 C35,35 25,45 25,45 C25,45 20,55 25,65 C30,75 40,75 40,75 L45,65 C45,65 55,75 75,70 C75,70 80,60 80,45 C80,30 75,35 75,35 Z" fill="currentColor"/>
+                                <path d="M25,45 L15,50 L20,60 L25,65" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-display text-xl font-bold tracking-wider leading-none text-brand-orange">RHINO</span>
+                            <span class="font-display text-lg font-bold tracking-wider leading-none text-white">GYM</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-6">Fitness - A Perfect Way of life. The ultimate destination for health and physical strength in Mangalagiri.</p>
+                    <div class="flex gap-4">
+                        <a href="https://instagram.com/rhino_gym_mangalgiri" class="w-10 h-10 rounded-full bg-brand-gray flex items-center justify-center text-white hover:bg-brand-orange transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-brand-gray flex items-center justify-center text-white hover:bg-brand-orange transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-xl font-display font-bold mb-6 border-l-4 border-brand-orange pl-3">QUICK LINKS</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-brand-orange transition-colors">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-brand-orange transition-colors">About Us</a></li>
+                        <li><a href="#classes" class="text-gray-400 hover:text-brand-orange transition-colors">Our Programs</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-brand-orange transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-xl font-display font-bold mb-6 border-l-4 border-brand-orange pl-3">VISIT US</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-brand-orange mt-1 shrink-0"></i>
+                            <span class="text-gray-400">Near Rajeev Statue,<br>Vadlapudi Center,<br>Mangalagiri</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" class="w-5 h-5 text-brand-orange shrink-0"></i>
+                            <span class="text-gray-400">+91 (Add Your Number)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="clock" class="w-5 h-5 text-brand-orange shrink-0"></i>
+                            <span class="text-gray-400">Morning - 5:30 AM onwards</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">
+                    &copy; <script>document.write(new Date().getFullYear())</script> Rhino Gym. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm">
+                    Designed for Greatness.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts to handle logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Add blur to navbar on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.style.backgroundColor = 'rgba(10, 10, 10, 0.9)';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+```
